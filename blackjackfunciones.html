@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blackjack</title>
+    <script>
+        let puntos = [0, 0];
+        
+        function jugar(jugador) {
+            puntos[jugador] += Math.floor(Math.random() * 10) + 2;
+            document.getElementById("puntos" + jugador).innerText = "Jugador " + (jugador + 1) + ": " + puntos[jugador];
+            document.getElementById("mensaje" + jugador).innerText = puntos[jugador] > 21 ? "Te pasaste" : "";
+        }
+        let plantado = [false, false];
+        function plantarse(jugador) {
+            plantado[jugador] = true;
+            document.getElementById("mensaje" + jugador).innerText = "Jugador " + (jugador + 1) + " Se ha plantado.";
+            if (plantado[0] && plantado[1]) {
+                let ganador = puntos[0] > 21 ? 1 : puntos[1] > 21 ? 0 : puntos[0] > puntos[1] ? 0 : puntos[0] < puntos[1] ? 1 : -1;
+                if (ganador == -1) {
+                    document.getElementById("mensaje0").innerText = "Empate";
+                    document.getElementById("mensaje1").innerText = "Empate";
+                } else {
+                    document.getElementById("mensaje" + ganador).innerText = "Ganador";
+                    document.getElementById("mensaje" + (1 - ganador)).innerText = "Perdedor";
+                }
+            }
+    
+    }
+        
+        function reiniciarJuego() {
+            puntos = [0, 0];
+            for (let i = 0; i < 2; i++) {
+                document.getElementById("puntos" + i).innerText = "Jugador " + (i + 1) + ": 0";
+                document.getElementById("mensaje" + i).innerText = "";
+            }
+        
+        }
+    </script>
+</head>
+<body>
+    <div>
+
+        <p id="puntos0">Jugador 1: 0</p>
+        <p id="mensaje0"></p>
+        <button onclick="jugar(0)">Carta</button>
+        <button onclick="plantarse(0)">Plantarse</button>
+    </div>
+    <div>
+        <p id="puntos1">Jugador 2: 0</p>
+        <p id="mensaje1"></p>
+        <button onclick="jugar(1)">Carta</button>
+        <button onclick="plantarse(1)">Plantarse</button>
+    </div>
+    <div>
+    <button onclick="reiniciarJuego()">Reiniciar</button>
+</body>
+</html>
